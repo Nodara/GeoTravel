@@ -3,20 +3,20 @@
 use Illuminate\Support\Facades\Route;
 
 
-//თითოეული Route დაცულია არაავტორიზებული წვდომისგან Middleware-ს დახმარებით
+//თითოეული მნიშვნელოვანი Route დაცულია არაავტორიზებული წვდომისგან Middleware-ს დახმარებით
 
 //საწყისი გვერდი
-Route::get('/', 'Controller@getSomeInfo')->middleware('auth');
+Route::get('/', 'Controller@getSomeInfo');
 //ყველა პოსტის ნახვა
-Route::get('posts', 'Controller@getAllPost')->middleware('auth');
+Route::get('posts', 'PostsController@getAllPost');
 //ყველა ტურის ნახვა
-Route::get('tours', 'Controller@getAllTour')->middleware('auth');
+Route::get('tours', 'ToursController@getAllTour');
 //კონკრეტული პოსტის დეტალური ნახვა
-Route::get('post/{id}' , 'Controller@getPost')->name('post')->middleware('auth');
+Route::get('post/{id}' , 'PostsController@getPost')->name('post');
 //კონკრეტული ტურის დეტალური ნახვა
-Route::get('tour/{id}' , 'Controller@getTour')->name('tour')->middleware('auth');
+Route::get('tour/{id}' , 'ToursController@getTour')->name('tour');
 //Logout
-Route::get('/logout' ,'Auth\LoginController@logout');
+Route::get('/logout' ,'Auth\LoginController@logout')->middleware('auth');
 
 
 
@@ -25,27 +25,27 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Administrator
 //ადმინის გვერდზე გადასვლა
 Route::get('/admin' ,       'Controller@adminInfo')->middleware('admin');
-Route::get('/admin/posts' , 'Controller@getAllPostAdmin')->middleware('admin');
-Route::get('/admin/tours' , 'Controller@getAllTourAdmin')->middleware('admin');
+Route::get('/admin/posts' , 'PostsController@getAllPostAdmin')->middleware('admin');
+Route::get('/admin/tours' , 'ToursController@getAllTourAdmin')->middleware('admin');
 
 
 
 //Post ის დასაედიტებელ მდგომარეობამდე მიყვანა
-Route::get('/editable_post/{id}','Controller@getPostById')->name('editable_post')->middleware('admin');
+Route::get('/editable_post/{id}','PostsController@getPostById')->name('editable_post')->middleware('admin');
 //Post-ის დაედიტება
-Route::put('/edit_post_force/{id}','Controller@editPost')->middleware('admin');
+Route::put('/edit_post_force/{id}','PostsController@editPost')->middleware('admin');
 
 //Tour-ის დასაედიტებელ მდგომარეობამდე მიყვანა
-Route::get('/editable_tour/{id}','Controller@getTourById')->name('editable_tour')->middleware('admin');
+Route::get('/editable_tour/{id}','ToursController@getTourById')->name('editable_tour')->middleware('admin');
 //Tour-ის დაედიტება
-Route::put('/edit_tour_force/{id}','Controller@editTour')->middleware('admin');
+Route::put('/edit_tour_force/{id}','ToursController@editTour')->middleware('admin');
 
 
 //Post-ის წაშლა
-Route::get('/delete_post/{id}','Controller@deletePost')->name('delete_post')->middleware('admin');
+Route::get('/delete_post/{id}','PostsController@deletePost')->name('delete_post')->middleware('admin');
 
 //Tour-ის წაშლა
-Route::get('/delete_tour/{id}','Controller@deleteTour')->name('delete_tour')->middleware('admin');
+Route::get('/delete_tour/{id}','ToursController@deleteTour')->name('delete_tour')->middleware('admin');
 
 
 Route::get('/add_post',function (){
@@ -57,10 +57,10 @@ Route::get('/add_tour',function (){
 })->middleware('admin');
 
 //Post-ის დამატება
-Route::post('add_post' , 'Controller@addPost')->middleware('admin');
+Route::post('add_post' , 'PostsController@addPost')->middleware('admin');
 
 //Tour-ის დამატება
-Route::post('add_tour' , 'Controller@addTour')->middleware('admin');
+Route::post('add_tour' , 'ToursController@addTour')->middleware('admin');
 
 
 
